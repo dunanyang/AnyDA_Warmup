@@ -1,0 +1,59 @@
+# dsn
+exp: "A2W_is_cls_bln_True"
+dataset: "office31"
+data_transforms: None
+data_loader_workers: 1
+#* 从 student 网络上预训练出来保存好权重，然后加载 ； Pretrained on source
+pretrained: ''
+# test pretrained resume
+resume: ''
+test_only: False
+#source_domain
+sdomain : "a"
+source_path: "../DA_dataset/office31/amazon_list.txt"
+#target_domain
+tdomain : "w"
+target_path: "../DA_dataset/office31/webcam_list.txt"
+
+#model_scaling
+model: "models.s_warmup_resnet"
+depth: 50
+num_subnets: 4
+depth_mult_range: [0.5, 1]
+depth_mult_list: [0.5, 1]
+#？ 这里写着重置参数？难道就不需要加载参数了？
+reset_parameters: True
+width_mult_list: [0.9, 1]
+width_mult_range: [0.9, 1]
+resolution_list: [224, 192, 160, 128]
+
+
+# 数据集图像信息
+num_classes: 31
+image_resize: 256
+image_size: 224
+#epochs
+sonly_ep: 0
+warm_ep: 30 # * 使用15个 epoch 进行 warmup
+num_epochs: 100
+print_freq: 100
+save_freq: 10
+
+# optimizer
+optimizer: "sgd"
+momentum: 0.9
+weight_decay: 0.001
+nesterov: True
+
+# lr
+lr:   0.0002
+lr_scheduler: "cosine"
+
+random_seed: 50
+use_aug: True
+is_cl_bln: True
+lbl_smooth: True
+s_bs: 32
+t_bs: 32
+batch_size: 32
+log_dir: "logs/"
